@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from rest_framework import viewsets, permissions
+from .models import WatchHistory
+from .serializers import WatchHistorySerializer
 
-# Create your views here.
+
+class WatchHistoryViewSet(viewsets.ModelViewSet):
+    serializer_class = WatchHistorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return WatchHistory.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
