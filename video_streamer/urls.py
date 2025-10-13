@@ -30,8 +30,8 @@ urlpatterns = [
 
     
     path('api/accounts/', include('accounts.urls')),
-    # path('api/videos/', include('videos.urls')),
-    # path('api/subscriptions/', include('subscriptions.urls')),
-    # path('api/payments/', include('payments.urls')),
-    # path('api/history/', include('history.urls')),
+    path('api/videos/', include('videos.urls')),
+    path('api/subscriptions/', include('subscriptions.urls')),
+    path('api/payments/', include('payments.urls')),
+    path('api/history/', include('history.urls')),
 ]

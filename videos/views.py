@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
-from .models import Video, Comment
-from .serializers import VideoSerializer, VideoUploadSerializer, CommentSerializer
+from videos.models import Video, Comment
+from videos.serializers import VideoSerializer, VideoUploadSerializer, CommentSerializer
 
 
 class VideoViewSet(viewsets.ModelViewSet):

@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
@@ -165,3 +167,15 @@ SIMPLE_JWT = {
 #         "LOCATION": "redis://127.0.0.1:6379",
 #     }
 # }
+
+
+# Clodinary storage config
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUD_NAME', ''),
+    'API_KEY': os.getenv('API_KEY', ''),
+    'API_SECRET': os.getenv('API_SECRET', ''),
+}
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

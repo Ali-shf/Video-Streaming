@@ -1,5 +1,7 @@
 from django.db import models
 from accounts.models import User
+from cloudinary.models import CloudinaryField
+
 # Create your models here.
 
 class Video(models.Model):
@@ -10,11 +12,11 @@ class Video(models.Model):
     )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    file_url = models.FileField(upload_to='videos/')
-    thumbnail = models.ImageField(
-        upload_to='thumbnails/',
+    file_url = models.CloudinaryField('videos')
+    thumbnail = models.CloudinaryField(
+        'thumbnails/',
         blank=True,
-        null=False,
+        null=True,
     )
     duration = models.PositiveIntegerField(
         help_text='Duration in seconds'
