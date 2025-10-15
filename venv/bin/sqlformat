@@ -1,4 +1,4 @@
-#!/home/alishf/video-streamer/venv/bin/python
+#!/home/alishf/video-streamer/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

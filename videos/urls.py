@@ -1,6 +1,6 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
-from .views import VideoViewSet, CommentViewSet
+from videos.views import VideoViewSet, CommentViewSet
 
 router = DefaultRouter()
 router.register(r'videos', VideoViewSet, basename='video')

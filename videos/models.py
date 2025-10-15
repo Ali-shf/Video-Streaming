@@ -12,14 +12,22 @@ class Video(models.Model):
     )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    file_url = models.CloudinaryField('videos')
-    thumbnail = models.CloudinaryField(
-        'thumbnails/',
+    file_url = CloudinaryField(
+        resource_type='video',
+        folder='videos/',
+        blank=False,
+        null=False,
+    )
+    thumbnail = CloudinaryField(
+        resource_type='image/',
+        folder='thumbnails/',
         blank=True,
         null=True,
     )
     duration = models.PositiveIntegerField(
-        help_text='Duration in seconds'
+        help_text='Duration in seconds',
+        blank=True,
+        null=True,
     )
     upload_date = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=False)
