@@ -3,8 +3,8 @@ from django.urls import path, include
 from .views import TransactionViewSet
 
 router = DefaultRouter()
-router.register(r'transactions', TransactionViewSet, basename='transaction')
+router.register(r"transactions", TransactionViewSet, basename="transaction")
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]

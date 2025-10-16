@@ -15,6 +15,8 @@ from accounts.serializers import (
     UserProfileSerializer,
     UpdateUserSerializer,
 )
+from drf_spectacular.utils import extend_schema
+
 
 # --------------------------------------------------------------------
 # Registration
@@ -64,6 +66,7 @@ class RegisterUserView(generics.CreateAPIView):
 # --------------------------------------------------------------------
 # Login
 # --------------------------------------------------------------------
+@extend_schema(auth=None)
 class LoginUserView(generics.GenericAPIView):
     permission_classes = [AllowAny]
 
@@ -213,7 +216,9 @@ class UserDetailView(generics.RetrieveAPIView):
     def get_object(self):
         user_id = self.request.query_params.get("user_id")
         if not user_id:
-            raise serializers.ValidationError({"error": "user_id query parameter is required."})
+            raise serializers.ValidationError(
+                {"error": "user_id query parameter is required."}
+            )
         try:
             return User.objects.get(id=user_id)
         except User.DoesNotExist:
@@ -227,19 +232,27 @@ class UpdateUserView(generics.GenericAPIView):
     def put(self, request, *args, **kwargs):
         user_id = request.query_params.get("user_id")
         if not user_id:
-            return Response({"error": "user_id query parameter is required."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "user_id query parameter is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         try:
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
-            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"error": "User not found."}, status=status.HTTP_404_NOT_FOUND
+            )
 
         serializer = self.get_serializer(user, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
         return Response(
-            {"message": "User updated successfully.", "user": UserProfileSerializer(user).data},
+            {
+                "message": "User updated successfully.",
+                "user": UserProfileSerializer(user).data,
+            },
             status=status.HTTP_200_OK,
         )
 
@@ -250,12 +263,17 @@ class DeleteUserView(generics.GenericAPIView):
     def delete(self, request, *args, **kwargs):
         user_id = request.query_params.get("user_id")
         if not user_id:
-            return Response({"error": "user_id query parameter is required."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "user_id query parameter is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         try:
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
-            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"error": "User not found."}, status=status.HTTP_404_NOT_FOUND
+            )
 
         tokens = OutstandingToken.objects.filter(user=user)
         for token in tokens:
@@ -277,21 +295,32 @@ class ChangeUserRoleView(generics.GenericAPIView):
     def patch(self, request, *args, **kwargs):
         user_id = request.query_params.get("user_id")
         if not user_id:
-            return Response({"error": "user_id query parameter is required."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "user_id query parameter is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         try:
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
-            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"error": "User not found."}, status=status.HTTP_404_NOT_FOUND
+            )
 
         is_admin = request.data.get("is_admin")
         if is_admin is None:
-            return Response({"error": "is_admin field is required."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "is_admin field is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         user.is_staff = bool(is_admin)
         user.save()
 
         return Response(
-            {"message": "User role updated successfully.", "user": UserProfileSerializer(user).data},
+            {
+                "message": "User role updated successfully.",
+                "user": UserProfileSerializer(user).data,
+            },
             status=status.HTTP_200_OK,
         )

@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
-from .models import SubscriptionPlan, Subscription
-from .serializers import SubscriptionPlanSerializer, SubscriptionSerializer
+from subscriptions.models import SubscriptionPlan, Subscription
+from subscriptions.serializers import SubscriptionPlanSerializer, SubscriptionSerializer
 
 
 class SubscriptionPlanViewSet(viewsets.ReadOnlyModelViewSet):

@@ -5,20 +5,23 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('videos', '0001_initial'),
+        ("videos", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='video',
-            name='file_url',
-            field=cloudinary.models.CloudinaryField(max_length=255, verbose_name='videos'),
+            model_name="video",
+            name="file_url",
+            field=cloudinary.models.CloudinaryField(
+                max_length=255, verbose_name="videos"
+            ),
         ),
         migrations.AlterField(
-            model_name='video',
-            name='thumbnail',
-            field=cloudinary.models.CloudinaryField(blank=True, max_length=255, null=True, verbose_name='thumbnails/'),
+            model_name="video",
+            name="thumbnail",
+            field=cloudinary.models.CloudinaryField(
+                blank=True, max_length=255, null=True, verbose_name="thumbnails/"
+            ),
         ),
     ]

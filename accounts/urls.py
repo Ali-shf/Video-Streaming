@@ -7,11 +7,11 @@ urlpatterns = [
     path("login/", views.LoginUserView.as_view(), name="login"),
     path("refresh/", views.RefreshTokenView.as_view(), name="token_refresh"),
     path("logout/", views.LogoutUserView.as_view(), name="logout"),
-
     # User Self-Profile
     path("profile/", views.UserProfileView.as_view(), name="user_profile"),
-    path("profile/update/", views.UpdateUserProfileView.as_view(), name="update_profile"),
-
+    path(
+        "profile/update/", views.UpdateUserProfileView.as_view(), name="update_profile"
+    ),
     # Admin Operations
     path("users/", views.UserListView.as_view(), name="user_list"),
     path("user/detail/", views.UserDetailView.as_view(), name="user_detail"),

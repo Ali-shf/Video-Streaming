@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
-from .models import WatchHistory
-from .serializers import WatchHistorySerializer
+from history.models import WatchHistory
+from history.serializers import WatchHistorySerializer
 
 
 class WatchHistoryViewSet(viewsets.ModelViewSet):
