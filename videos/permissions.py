@@ -26,7 +26,7 @@ class CanCommentOnPublicVideo(permissions.BasePermission):
     """Allow commenting only on public videos."""
 
     def has_permission(self, request, view):
-        if view.action == "create":
+        if view.action == 'create':
             video = view.get_video()  # helper defined in the viewset
             return video.is_public
         return True

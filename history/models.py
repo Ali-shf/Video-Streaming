@@ -12,7 +12,7 @@ class WatchHistory(models.Model):
     progress = models.PositiveIntegerField(default=0)
 
     class Meta:
-        unique_together = ("user", "video")  # one record per user-video
+        unique_together = ('user', 'video')  # one record per user-video
 
     def __str__(self):
-        return f"{self.user.username} watched {self.video.title}"
+        return f'{self.user.username} watched {self.video.title}'

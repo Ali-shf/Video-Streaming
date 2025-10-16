@@ -7,4 +7,4 @@ class TransactionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transaction
-        fields = ["id", "user", "amount", "payment_status", "ref_code", "created_at"]
+        fields = ['id', 'user', 'amount', 'payment_status', 'ref_code', 'created_at']

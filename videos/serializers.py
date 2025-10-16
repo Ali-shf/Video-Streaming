@@ -7,7 +7,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ["id", "user", "text", "created_at"]
+        fields = ['id', 'user', 'text', 'created_at']
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -17,18 +17,18 @@ class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
         fields = [
-            "id",
-            "uploader",
-            "title",
-            "description",
-            "file_url",
-            "thumbnail",
-            "duration",
-            "upload_date",
-            "is_public",
-            "views_count",
-            "likes_count",
-            "comments",
+            'id',
+            'uploader',
+            'title',
+            'description',
+            'file_url',
+            'thumbnail',
+            'duration',
+            'upload_date',
+            'is_public',
+            'views_count',
+            'likes_count',
+            'comments',
         ]
 
 
@@ -36,10 +36,10 @@ class VideoUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
         fields = [
-            "title",
-            "description",
-            "file_url",
-            "thumbnail",
-            "duration",
-            "is_public",
+            'title',
+            'description',
+            'file_url',
+            'thumbnail',
+            'duration',
+            'is_public',
         ]

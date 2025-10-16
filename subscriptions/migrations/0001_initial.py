@@ -14,56 +14,56 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="SubscriptionPlan",
+            name='SubscriptionPlan',
             fields=[
                 (
-                    "id",
+                    'id',
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name="ID",
+                        verbose_name='ID',
                     ),
                 ),
                 (
-                    "name",
+                    'name',
                     models.CharField(
-                        choices=[("B", "Basic"), ("P", "Pro"), ("A", "Annual")],
+                        choices=[('B', 'Basic'), ('P', 'Pro'), ('A', 'Annual')],
                         max_length=10,
                     ),
                 ),
-                ("price", models.DecimalField(decimal_places=2, max_digits=8)),
-                ("duration_days", models.PositiveIntegerField()),
-                ("description", models.TextField(blank=True)),
+                ('price', models.DecimalField(decimal_places=2, max_digits=8)),
+                ('duration_days', models.PositiveIntegerField()),
+                ('description', models.TextField(blank=True)),
             ],
         ),
         migrations.CreateModel(
-            name="Subscription",
+            name='Subscription',
             fields=[
                 (
-                    "id",
+                    'id',
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name="ID",
+                        verbose_name='ID',
                     ),
                 ),
-                ("start_date", models.DateTimeField()),
-                ("end_date", models.DateTimeField()),
-                ("is_active", models.BooleanField(default=True)),
+                ('start_date', models.DateTimeField()),
+                ('end_date', models.DateTimeField()),
+                ('is_active', models.BooleanField(default=True)),
                 (
-                    "user",
+                    'user',
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 (
-                    "plan",
+                    'plan',
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="subscriptions.subscriptionplan",
+                        to='subscriptions.subscriptionplan',
                     ),
                 ),
             ],

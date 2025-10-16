@@ -9,41 +9,41 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("videos", "0001_initial"),
+        ('videos', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name="WatchHistory",
+            name='WatchHistory',
             fields=[
                 (
-                    "id",
+                    'id',
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name="ID",
+                        verbose_name='ID',
                     ),
                 ),
-                ("watched_at", models.DateTimeField(auto_now_add=True)),
-                ("progress", models.PositiveIntegerField(default=0)),
+                ('watched_at', models.DateTimeField(auto_now_add=True)),
+                ('progress', models.PositiveIntegerField(default=0)),
                 (
-                    "user",
+                    'user',
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 (
-                    "video",
+                    'video',
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="videos.video"
+                        on_delete=django.db.models.deletion.CASCADE, to='videos.video'
                     ),
                 ),
             ],
             options={
-                "unique_together": {("user", "video")},
+                'unique_together': {('user', 'video')},
             },
         ),
     ]

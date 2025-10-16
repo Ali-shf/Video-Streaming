@@ -30,24 +30,24 @@ from drf_spectacular.views import (
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/accounts/", include("accounts.urls")),
-    path("api/videos/", include("videos.urls")),
-    path("api/subscriptions/", include("subscriptions.urls")),
-    path("api/payments/", include("payments.urls")),
-    path("api/history/", include("history.urls")),
-    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path('admin/', admin.site.urls),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/accounts/', include('accounts.urls')),
+    path('api/videos/', include('videos.urls')),
+    path('api/subscriptions/', include('subscriptions.urls')),
+    path('api/payments/', include('payments.urls')),
+    path('api/history/', include('history.urls')),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:
     path(
-        "api/schema/swagger-ui/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
-        name="swagger-ui",
+        'api/schema/swagger-ui/',
+        SpectacularSwaggerView.as_view(url_name='schema'),
+        name='swagger-ui',
     ),
     path(
-        "api/schema/redoc/",
-        SpectacularRedocView.as_view(url_name="schema"),
-        name="redoc",
+        'api/schema/redoc/',
+        SpectacularRedocView.as_view(url_name='schema'),
+        name='redoc',
     ),
 ]

@@ -10,11 +10,11 @@ class VideoViewSet(viewsets.ModelViewSet):
     - Only admins can create, update, or delete videos
     """
 
-    queryset = Video.objects.all().order_by("-upload_date")
+    queryset = Video.objects.all().order_by('-upload_date')
     permission_classes = [IsAdminOnly]
 
     def get_serializer_class(self):
-        if self.action in ["create", "update", "partial_update"]:
+        if self.action in ['create', 'update', 'partial_update']:
             return VideoUploadSerializer
         return VideoSerializer
 
@@ -22,9 +22,9 @@ class VideoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.is_staff:
             # Admin can see all videos
-            return Video.objects.all().order_by("-upload_date")
+            return Video.objects.all().order_by('-upload_date')
         # Regular users see only public videos
-        return Video.objects.filter(is_public=True).order_by("-upload_date")
+        return Video.objects.filter(is_public=True).order_by('-upload_date')
 
     def perform_create(self, serializer):
         # Admin uploads videos
@@ -46,11 +46,11 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_video(self):
         """Helper method required by CanCommentOnPublicVideo"""
-        return Video.objects.get(pk=self.kwargs["video_pk"])
+        return Video.objects.get(pk=self.kwargs['video_pk'])
 
     def get_queryset(self):
-        return Comment.objects.filter(video_id=self.kwargs["video_pk"]).order_by(
-            "-created_at"
+        return Comment.objects.filter(video_id=self.kwargs['video_pk']).order_by(
+            '-created_at'
         )
 
     def perform_create(self, serializer):

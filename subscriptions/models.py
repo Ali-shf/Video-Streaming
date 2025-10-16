@@ -7,9 +7,9 @@ from accounts.models import User
 
 class SubscriptionPlan(models.Model):
     NAMES_CHOICES = [
-        ("B", "Basic"),
-        ("P", "Pro"),
-        ("A", "Annual"),
+        ('B', 'Basic'),
+        ('P', 'Pro'),
+        ('A', 'Annual'),
     ]
     name = models.CharField(max_length=10, choices=NAMES_CHOICES)
     price = models.DecimalField(max_digits=8, decimal_places=2)
@@ -31,7 +31,7 @@ class Subscription(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.plan.name}"
+        return f'{self.user.username} - {self.plan.name}'
 
     def __repr__(self):
-        return f"{self.user.username} - {self.plan.name}"
+        return f'{self.user.username} - {self.plan.name}'

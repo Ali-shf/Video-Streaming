@@ -7,24 +7,24 @@ from cloudinary.models import CloudinaryField
 
 class Video(models.Model):
     uploader = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="uploaded_videos"
+        User, on_delete=models.CASCADE, related_name='uploaded_videos'
     )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     file_url = CloudinaryField(
-        resource_type="video",
-        folder="videos/",
+        resource_type='video',
+        folder='videos/',
         blank=False,
         null=False,
     )
     thumbnail = CloudinaryField(
-        resource_type="image/",
-        folder="thumbnails/",
+        resource_type='image/',
+        folder='thumbnails/',
         blank=True,
         null=True,
     )
     duration = models.PositiveIntegerField(
-        help_text="Duration in seconds",
+        help_text='Duration in seconds',
         blank=True,
         null=True,
     )
@@ -42,12 +42,12 @@ class Video(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name="comments")
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='comments')
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} on {self.video.title}"
+        return f'{self.user.username} on {self.video.title}'
 
     def __repr__(self):
-        return f"{self.user.username} on {self.video.title}"
+        return f'{self.user.username} on {self.video.title}'

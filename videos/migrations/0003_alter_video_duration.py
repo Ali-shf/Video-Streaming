@@ -5,15 +5,15 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("videos", "0002_alter_video_file_url_alter_video_thumbnail"),
+        ('videos', '0002_alter_video_file_url_alter_video_thumbnail'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="video",
-            name="duration",
+            model_name='video',
+            name='duration',
             field=models.PositiveIntegerField(
-                blank=True, help_text="Duration in seconds", null=True
+                blank=True, help_text='Duration in seconds', null=True
             ),
         ),
     ]

@@ -9,4 +9,4 @@ class WatchHistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WatchHistory
-        fields = ["id", "user", "video", "watched_at", "progress"]
+        fields = ['id', 'user', 'video', 'watched_at', 'progress']

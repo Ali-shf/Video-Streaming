@@ -34,33 +34,33 @@ class RegisterUserView(generics.CreateAPIView):
 
         self.response = Response(
             {
-                "message": "User registered successfully.",
-                "user": UserProfileSerializer(user).data,
+                'message': 'User registered successfully.',
+                'user': UserProfileSerializer(user).data,
             },
             status=status.HTTP_201_CREATED,
         )
 
         # Set cookies
         self.response.set_cookie(
-            key="access_token",
+            key='access_token',
             value=str(refresh.access_token),
             httponly=True,
             secure=False,
             expires=timezone.now() + timedelta(minutes=30),
-            samesite="Lax",
+            samesite='Lax',
         )
         self.response.set_cookie(
-            key="refresh_token",
+            key='refresh_token',
             value=str(refresh),
             httponly=True,
             secure=False,
             expires=timezone.now() + timedelta(days=7),
-            samesite="Lax",
+            samesite='Lax',
         )
 
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
-        return getattr(self, "response", response)
+        return getattr(self, 'response', response)
 
 
 # --------------------------------------------------------------------
@@ -71,12 +71,12 @@ class LoginUserView(generics.GenericAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        username = request.data.get("username")
-        password = request.data.get("password")
+        username = request.data.get('username')
+        password = request.data.get('password')
 
         if not username or not password:
             return Response(
-                {"error": "Username and password required."},
+                {'error': 'Username and password required.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -84,13 +84,13 @@ class LoginUserView(generics.GenericAPIView):
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             return Response(
-                {"error": "Invalid credentials."},
+                {'error': 'Invalid credentials.'},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
         if not user.check_password(password):
             return Response(
-                {"error": "Invalid credentials."},
+                {'error': 'Invalid credentials.'},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
@@ -98,27 +98,27 @@ class LoginUserView(generics.GenericAPIView):
 
         response = Response(
             {
-                "message": "Login successful.",
-                "user": UserProfileSerializer(user).data,
+                'message': 'Login successful.',
+                'user': UserProfileSerializer(user).data,
             },
             status=status.HTTP_200_OK,
         )
 
         response.set_cookie(
-            key="access_token",
+            key='access_token',
             value=str(refresh.access_token),
             httponly=True,
             secure=False,
             expires=timezone.now() + timedelta(minutes=30),
-            samesite="Lax",
+            samesite='Lax',
         )
         response.set_cookie(
-            key="refresh_token",
+            key='refresh_token',
             value=str(refresh),
             httponly=True,
             secure=False,
             expires=timezone.now() + timedelta(days=7),
-            samesite="Lax",
+            samesite='Lax',
         )
 
         return response
@@ -131,11 +131,11 @@ class RefreshTokenView(generics.GenericAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        refresh_token = request.COOKIES.get("refresh_token")
+        refresh_token = request.COOKIES.get('refresh_token')
 
         if not refresh_token:
             return Response(
-                {"error": "No refresh token provided."},
+                {'error': 'No refresh token provided.'},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
@@ -144,18 +144,18 @@ class RefreshTokenView(generics.GenericAPIView):
             access_token = str(refresh.access_token)
         except Exception:
             return Response(
-                {"error": "Invalid or expired refresh token."},
+                {'error': 'Invalid or expired refresh token.'},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
-        response = Response({"message": "Access token refreshed."})
+        response = Response({'message': 'Access token refreshed.'})
         response.set_cookie(
-            key="access_token",
+            key='access_token',
             value=access_token,
             httponly=True,
             secure=False,
             expires=timezone.now() + timedelta(minutes=30),
-            samesite="Lax",
+            samesite='Lax',
         )
         return response
 
@@ -172,11 +172,11 @@ class LogoutUserView(generics.GenericAPIView):
             BlacklistedToken.objects.get_or_create(token=token)
 
         response = Response(
-            {"message": "Logged out successfully."},
+            {'message': 'Logged out successfully.'},
             status=status.HTTP_200_OK,
         )
-        response.delete_cookie("access_token")
-        response.delete_cookie("refresh_token")
+        response.delete_cookie('access_token')
+        response.delete_cookie('refresh_token')
         return response
 
 
@@ -214,15 +214,15 @@ class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
 
     def get_object(self):
-        user_id = self.request.query_params.get("user_id")
+        user_id = self.request.query_params.get('user_id')
         if not user_id:
             raise serializers.ValidationError(
-                {"error": "user_id query parameter is required."}
+                {'error': 'user_id query parameter is required.'}
             )
         try:
             return User.objects.get(id=user_id)
         except User.DoesNotExist:
-            raise serializers.ValidationError({"error": "User not found."})
+            raise serializers.ValidationError({'error': 'User not found.'})
 
 
 class UpdateUserView(generics.GenericAPIView):
@@ -230,10 +230,10 @@ class UpdateUserView(generics.GenericAPIView):
     permission_classes = [IsAdminUser]
 
     def put(self, request, *args, **kwargs):
-        user_id = request.query_params.get("user_id")
+        user_id = request.query_params.get('user_id')
         if not user_id:
             return Response(
-                {"error": "user_id query parameter is required."},
+                {'error': 'user_id query parameter is required.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -241,7 +241,7 @@ class UpdateUserView(generics.GenericAPIView):
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
             return Response(
-                {"error": "User not found."}, status=status.HTTP_404_NOT_FOUND
+                {'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND
             )
 
         serializer = self.get_serializer(user, data=request.data, partial=True)
@@ -250,8 +250,8 @@ class UpdateUserView(generics.GenericAPIView):
 
         return Response(
             {
-                "message": "User updated successfully.",
-                "user": UserProfileSerializer(user).data,
+                'message': 'User updated successfully.',
+                'user': UserProfileSerializer(user).data,
             },
             status=status.HTTP_200_OK,
         )
@@ -261,10 +261,10 @@ class DeleteUserView(generics.GenericAPIView):
     permission_classes = [IsAdminUser]
 
     def delete(self, request, *args, **kwargs):
-        user_id = request.query_params.get("user_id")
+        user_id = request.query_params.get('user_id')
         if not user_id:
             return Response(
-                {"error": "user_id query parameter is required."},
+                {'error': 'user_id query parameter is required.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -272,7 +272,7 @@ class DeleteUserView(generics.GenericAPIView):
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
             return Response(
-                {"error": "User not found."}, status=status.HTTP_404_NOT_FOUND
+                {'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND
             )
 
         tokens = OutstandingToken.objects.filter(user=user)
@@ -283,7 +283,7 @@ class DeleteUserView(generics.GenericAPIView):
         user.delete()
 
         return Response(
-            {"message": f"User '{username}' deleted and tokens invalidated."},
+            {'message': f"User '{username}' deleted and tokens invalidated."},
             status=status.HTTP_204_NO_CONTENT,
         )
 
@@ -293,10 +293,10 @@ class ChangeUserRoleView(generics.GenericAPIView):
     serializer_class = UpdateUserSerializer
 
     def patch(self, request, *args, **kwargs):
-        user_id = request.query_params.get("user_id")
+        user_id = request.query_params.get('user_id')
         if not user_id:
             return Response(
-                {"error": "user_id query parameter is required."},
+                {'error': 'user_id query parameter is required.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -304,13 +304,13 @@ class ChangeUserRoleView(generics.GenericAPIView):
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
             return Response(
-                {"error": "User not found."}, status=status.HTTP_404_NOT_FOUND
+                {'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND
             )
 
-        is_admin = request.data.get("is_admin")
+        is_admin = request.data.get('is_admin')
         if is_admin is None:
             return Response(
-                {"error": "is_admin field is required."},
+                {'error': 'is_admin field is required.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -319,8 +319,8 @@ class ChangeUserRoleView(generics.GenericAPIView):
 
         return Response(
             {
-                "message": "User role updated successfully.",
-                "user": UserProfileSerializer(user).data,
+                'message': 'User role updated successfully.',
+                'user': UserProfileSerializer(user).data,
             },
             status=status.HTTP_200_OK,
         )

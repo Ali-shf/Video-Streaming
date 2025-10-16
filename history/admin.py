@@ -6,5 +6,5 @@ from history.models import WatchHistory
 
 @admin.register(WatchHistory)
 class WatchHistoryAdmin(admin.ModelAdmin):
-    list_display = ("watched_at",)
-    search_fields = ("user__username", "video__title")
+    list_display = ('watched_at',)
+    search_fields = ('user__username', 'video__title')

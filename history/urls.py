@@ -4,9 +4,9 @@ from history.views import WatchHistoryViewSet
 
 
 router = DefaultRouter()
-router.register(r"history", WatchHistoryViewSet, basename="watchhistory")
+router.register(r'history', WatchHistoryViewSet, basename='watchhistory')
 
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path('', include(router.urls)),
 ]

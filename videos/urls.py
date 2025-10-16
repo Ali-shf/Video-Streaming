@@ -3,12 +3,12 @@ from django.urls import path, include
 from videos.views import VideoViewSet, CommentViewSet
 
 router = DefaultRouter()
-router.register(r"videos", VideoViewSet, basename="video")
+router.register(r'videos', VideoViewSet, basename='video')
 
 # Nested route for comments
-comment_list = CommentViewSet.as_view({"get": "list", "post": "create"})
+comment_list = CommentViewSet.as_view({'get': 'list', 'post': 'create'})
 
 urlpatterns = [
-    path("", include(router.urls)),
-    path("videos/<int:video_pk>/comments/", comment_list, name="video-comments"),
+    path('', include(router.urls)),
+    path('videos/<int:video_pk>/comments/', comment_list, name='video-comments'),
 ]
